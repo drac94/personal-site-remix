@@ -1,22 +1,70 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  type ActionArgs,
+  json,
+  type LoaderArgs,
+  redirect,
+} from "@remix-run/node";
+import { Form } from "@remix-run/react";
+import { useEffect, useRef } from "react";
+import { typedjson, useTypedLoaderData } from "remix-typedjson";
 import Prompt from "~/components/prompt";
+import { commitSession, destroySession, getSession } from "~/sessions";
+
+type PromptType = {
+  command: string;
+  output: string;
+};
+
+export const action = async ({ request }: ActionArgs) => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const formData = await request.formData();
+  const command = formData.get("command");
+
+  if (typeof command !== "string") {
+    return json({ error: "Invalid command" }, { status: 400 });
+  }
+  const prompts = (session.get("prompts") || []) as Array<PromptType>;
+
+  if (command === "clear") {
+    return redirect("/", {
+      headers: {
+        "Set-Cookie": await destroySession(session),
+      },
+    });
+  }
+
+  prompts.push({
+    command,
+    output: "about me",
+  });
+
+  session.set("prompts", prompts);
+
+  return redirect("/", {
+    headers: {
+      "Set-Cookie": await commitSession(session),
+    },
+  });
+};
+
+export const loader = async ({ request }: LoaderArgs) => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const prompts = (session.get("prompts") || []) as Array<PromptType>;
+
+  return typedjson({
+    prompts,
+  });
+};
 
 export default function Index() {
-  const [prompts, setPrompts] = useState([
-    {
-      command: "ls",
-      output: "about projects",
-    },
-    {
-      command: "cd about",
-      output: "about me",
-    },
-  ]);
+  const { prompts } = useTypedLoaderData<typeof loader>();
 
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
+    formRef.current?.reset();
     inputRef.current?.focus();
     containerRef.current?.scrollTo(0, containerRef.current.scrollHeight);
   }, [prompts]);
@@ -48,23 +96,16 @@ export default function Index() {
           ))}
           <div className="flex">
             <Prompt />
-            <input
-              className="bg-transparent text-slate-200 outline-none"
-              autoFocus
-              ref={inputRef}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  setPrompts([
-                    ...prompts,
-                    {
-                      command: event.currentTarget.value,
-                      output: "about me",
-                    },
-                  ]);
-                  event.currentTarget.value = "";
-                }
-              }}
-            />
+            <Form method="post" ref={formRef} replace>
+              <input
+                className="bg-transparent text-slate-200 outline-none"
+                autoFocus
+                name="command"
+                autoComplete="off"
+                ref={inputRef}
+              />
+              <input type="submit" hidden />
+            </Form>
           </div>
         </div>
       </div>
