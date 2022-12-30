@@ -96,6 +96,17 @@ export const executeCommand = async ({
         currentPath,
         newPath: isDirectory ? path : currentPath,
       };
+    case "cat":
+      const file = `${currentPath}/${arg}`;
+      const isFile = doesFileExist(file);
+      return {
+        output: isFile
+          ? files[file]
+          : doesDirectoryExist(file)
+          ? "cat: " + arg + ": Is a directory"
+          : "cat: " + arg + ": No such file or directory",
+        currentPath,
+      };
     default:
       return {
         output: "command not found: " + command,
