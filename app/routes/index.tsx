@@ -8,11 +8,13 @@ import { Form } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import { typedjson, useTypedLoaderData } from "remix-typedjson";
 import Prompt from "~/components/prompt";
+import { executeCommand, type Item } from "~/server";
 import { commitSession, destroySession, getSession } from "~/sessions";
 
 type PromptType = {
   command: string;
-  output: string;
+  output: string | Array<Item>;
+  path: string;
 };
 
 export const action = async ({ request }: ActionArgs) => {
@@ -24,8 +26,11 @@ export const action = async ({ request }: ActionArgs) => {
     return json({ error: "Invalid command" }, { status: 400 });
   }
   const prompts = (session.get("prompts") || []) as Array<PromptType>;
+  const currentPath = session.get("currentPath") || "home";
 
-  if (command === "clear") {
+  const [commandName, arg] = command.split(" ");
+
+  if (commandName === "clear") {
     return redirect("/", {
       headers: {
         "Set-Cookie": await destroySession(session),
@@ -33,9 +38,18 @@ export const action = async ({ request }: ActionArgs) => {
     });
   }
 
+  const result = await executeCommand({
+    command: commandName,
+    currentPath,
+    arg,
+  });
+
+  session.set("currentPath", result.newPath || currentPath);
+
   prompts.push({
     command,
-    output: "about me",
+    output: result.output,
+    path: currentPath,
   });
 
   session.set("prompts", prompts);
@@ -50,14 +64,16 @@ export const action = async ({ request }: ActionArgs) => {
 export const loader = async ({ request }: LoaderArgs) => {
   const session = await getSession(request.headers.get("Cookie"));
   const prompts = (session.get("prompts") || []) as Array<PromptType>;
+  const currentPath = session.get("currentPath") || "home";
 
   return typedjson({
     prompts,
+    currentPath,
   });
 };
 
 export default function Index() {
-  const { prompts } = useTypedLoaderData<typeof loader>();
+  const { prompts, currentPath } = useTypedLoaderData<typeof loader>();
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -88,14 +104,22 @@ export default function Index() {
           {prompts.map((prompt) => (
             <div className="text-slate-200" key={prompt.command}>
               <div className="flex">
-                <Prompt />
+                <Prompt path={prompt.path} />
                 <p>{prompt.command}</p>
               </div>
-              <p>{prompt.output}</p>
+              {Array.isArray(prompt.output) ? (
+                <ul>
+                  {prompt.output.map((item) => (
+                    <li key={item.id}>{item.name}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>{prompt.output}</p>
+              )}
             </div>
           ))}
           <div className="flex">
-            <Prompt />
+            <Prompt path={currentPath} />
             <Form method="post" ref={formRef} replace>
               <input
                 className="bg-transparent text-slate-200 outline-none"
@@ -104,6 +128,7 @@ export default function Index() {
                 autoComplete="off"
                 ref={inputRef}
               />
+              <input name="path" value={currentPath} hidden />
               <input type="submit" hidden />
             </Form>
           </div>
