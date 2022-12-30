@@ -102,15 +102,20 @@ export default function Index() {
           onClick={() => inputRef.current?.focus()}
         >
           {prompts.map((prompt) => (
-            <div className="text-slate-200" key={prompt.command}>
+            <div className="mb-1 text-slate-200" key={prompt.command}>
               <div className="flex">
                 <Prompt path={prompt.path} />
                 <p>{prompt.command}</p>
               </div>
               {Array.isArray(prompt.output) ? (
-                <ul>
+                <ul className="flex justify-between">
                   {prompt.output.map((item) => (
-                    <li key={item.name}>{item.name}</li>
+                    <li
+                      className={item.type === "file" ? "text-blue-400" : ""}
+                      key={item.name}
+                    >
+                      {item.name}
+                    </li>
                   ))}
                 </ul>
               ) : (
