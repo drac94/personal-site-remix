@@ -415,7 +415,7 @@ function Index() {
               lineNumber: 127,
               columnNumber: 13
             }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(import_react3.Form, { method: "post", ref: formRef, replace: !0, children: [
+            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(import_react3.Form, { method: "post", ref: formRef, replace: !0, action: "/?index", children: [
               /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("input", { name: "path", defaultValue: currentPath, hidden: !0 }, void 0, !1, {
                 fileName: "app/routes/index.tsx",
                 lineNumber: 129,
@@ -479,7 +479,7 @@ function Index() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { version: "bf3ecf26", entry: { module: "/build/entry.client-V7NR2TP6.js", imports: ["/build/_shared/chunk-LARA5CK4.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-VBBZUTG4.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-CMD7XJEU.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-BF3ECF26.js" };
+var assets_manifest_default = { version: "3fc71477", entry: { module: "/build/entry.client-V7NR2TP6.js", imports: ["/build/_shared/chunk-LARA5CK4.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-VBBZUTG4.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-YHXO2WHA.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-3FC71477.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", future = { v2_meta: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

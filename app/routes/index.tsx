@@ -125,7 +125,7 @@ export default function Index() {
           ))}
           <div className="flex">
             <Prompt path={currentPath} />
-            <Form method="post" ref={formRef} replace>
+            <Form method="post" ref={formRef} replace action="/?index">
               <input name="path" defaultValue={currentPath} hidden />
               <input
                 className="bg-transparent text-slate-200 outline-none"
