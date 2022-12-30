@@ -102,7 +102,7 @@ export default function Index() {
           onClick={() => inputRef.current?.focus()}
         >
           {prompts.map((prompt) => (
-            <div className="mb-1 text-slate-200" key={prompt.command}>
+            <div className="text-slate-200" key={prompt.command}>
               <div className="flex">
                 <Prompt path={prompt.path} />
                 <p>{prompt.command}</p>

@@ -5,6 +5,10 @@ interface Directory {
   };
 }
 
+interface File {
+  [key: string]: string;
+}
+
 type ItemType = "file" | "directory";
 
 export interface Item {
@@ -31,12 +35,25 @@ const directories: Directory = {
   },
 };
 
-const doesPathExist = (path: string) => {
+const files: File = {
+  "home/about.md": `# About Me \n\nI am a software engineer.`,
+  "home/resume.md": `# Resume \n\nI am a software engineer.`,
+  "home/articles/article1.md": `# Article 1 \n\nThis is article 1.`,
+  "home/articles/article2.md": `# Article 2 \n\nThis is article 2.`,
+  "home/projects/project1.md": `# Project 1 \n\nThis is project 1.`,
+  "home/projects/project2.md": `# Project 2 \n\nThis is project 2.`,
+};
+
+const doesDirectoryExist = (path: string) => {
   return directories[path] !== undefined;
 };
 
+const doesFileExist = (path: string) => {
+  return files[path] !== undefined;
+};
+
 const getItems = (path: string): Array<Item> => {
-  const isPathValid = doesPathExist(path);
+  const isPathValid = doesDirectoryExist(path);
   if (!isPathValid) {
     return [];
   }
@@ -69,11 +86,15 @@ export const executeCommand = async ({
         return { output: "", currentPath: currentPath, newPath: "home" };
       }
       const path = `${currentPath}/${arg}`;
-      const isPathValid = doesPathExist(path);
+      const isDirectory = doesDirectoryExist(path);
       return {
-        output: isPathValid ? "" : "cd: no such file or directory: " + arg,
+        output: isDirectory
+          ? ""
+          : doesFileExist(path)
+          ? "cd: not a directory: " + arg
+          : "cd: no such file or directory: " + arg,
         currentPath,
-        newPath: isPathValid ? path : currentPath,
+        newPath: isDirectory ? path : currentPath,
       };
     default:
       return {
