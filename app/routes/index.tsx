@@ -126,7 +126,7 @@ export default function Index() {
           <div className="flex">
             <Prompt path={currentPath} />
             <Form method="post" ref={formRef} replace>
-              <input type="submit" hidden />
+              <input name="path" defaultValue={currentPath} hidden />
               <input
                 className="bg-transparent text-slate-200 outline-none"
                 autoFocus
@@ -136,7 +136,7 @@ export default function Index() {
                 autoCorrect="off"
                 ref={inputRef}
               />
-              <input name="path" defaultValue={currentPath} hidden />
+              <input type="submit" hidden />
             </Form>
           </div>
         </div>
