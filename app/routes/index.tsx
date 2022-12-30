@@ -110,7 +110,7 @@ export default function Index() {
               {Array.isArray(prompt.output) ? (
                 <ul>
                   {prompt.output.map((item) => (
-                    <li key={item.id}>{item.name}</li>
+                    <li key={item.name}>{item.name}</li>
                   ))}
                 </ul>
               ) : (
@@ -128,7 +128,7 @@ export default function Index() {
                 autoComplete="off"
                 ref={inputRef}
               />
-              <input name="path" value={currentPath} hidden />
+              <input name="path" defaultValue={currentPath} hidden />
               <input type="submit" hidden />
             </Form>
           </div>

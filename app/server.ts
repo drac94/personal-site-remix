@@ -1,63 +1,13 @@
-interface File {
-  id: string;
-  name: string;
-  content: string;
-}
-
 interface Directory {
-  id: string;
-  name: string;
-  files?: Array<File>;
-  directories?: Array<Directory>;
+  [key: string]: {
+    directories?: Array<string>;
+    files?: Array<string>;
+  };
 }
-
-const paths: Array<Directory> = [
-  {
-    id: "0",
-    name: "home",
-    files: [
-      {
-        id: "1",
-        name: "about",
-        content: "about me",
-      },
-      {
-        id: "2",
-        name: "resume",
-        content: "resume",
-      },
-    ],
-    directories: [
-      {
-        id: "3",
-        name: "articles",
-        files: [
-          {
-            id: "4",
-            name: "article1",
-            content: "article1",
-          },
-        ],
-      },
-      {
-        id: "5",
-        name: "projects",
-        files: [
-          {
-            id: "6",
-            name: "project1",
-            content: "project1",
-          },
-        ],
-      },
-    ],
-  },
-];
 
 type ItemType = "file" | "directory";
 
 export interface Item {
-  id: string;
   name: string;
   type: ItemType;
 }
@@ -68,25 +18,35 @@ interface CommandResult {
   newPath?: string;
 }
 
-const getItems = (path: string): Array<Item> => {
-  const currentPath = paths.find((p) => p.name === path);
-  if (!currentPath) {
-    return [];
-  }
-  const files =
-    currentPath.files?.map(
-      (f): Item => ({ id: f.id, name: f.name, type: "file" })
-    ) || [];
-  const directories =
-    currentPath.directories?.map(
-      (d): Item => ({ id: d.id, name: d.name, type: "directory" })
-    ) || [];
-  return [...files, ...directories];
+const directories: Directory = {
+  home: {
+    directories: ["articles", "projects"],
+    files: ["about.md", "resume.md"],
+  },
+  "home/articles": {
+    files: ["article1.md", "article2.md"],
+  },
+  "home/projects": {
+    files: ["project1.md", "project2.md"],
+  },
 };
 
 const doesPathExist = (path: string) => {
-  // currently there is only one directory, so this is fine
-  return paths[0].directories?.find((p) => p.name === path);
+  return directories[path] !== undefined;
+};
+
+const getItems = (path: string): Array<Item> => {
+  const isPathValid = doesPathExist(path);
+  if (!isPathValid) {
+    return [];
+  }
+  const { directories: dir, files } = directories[path];
+  return [
+    ...(dir?.map(
+      (directory): Item => ({ name: directory, type: "directory" })
+    ) ?? []),
+    ...(files?.map((file): Item => ({ name: file, type: "file" })) ?? []),
+  ];
 };
 
 export const executeCommand = async ({
@@ -104,11 +64,16 @@ export const executeCommand = async ({
     case "ls":
       return { output: getItems(currentPath), currentPath: currentPath };
     case "cd":
-      const isPathValid = doesPathExist(arg);
+      // currently there is only one level down from home
+      if (!arg || arg === "~" || arg === "..") {
+        return { output: "", currentPath: currentPath, newPath: "home" };
+      }
+      const path = `${currentPath}/${arg}`;
+      const isPathValid = doesPathExist(path);
       return {
         output: isPathValid ? "" : "cd: no such file or directory: " + arg,
         currentPath,
-        newPath: isPathValid ? `${currentPath}/${arg}` : currentPath,
+        newPath: isPathValid ? path : currentPath,
       };
     default:
       return {
