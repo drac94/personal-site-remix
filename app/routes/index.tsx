@@ -136,7 +136,7 @@ export default function Index() {
                 autoCorrect="off"
                 ref={inputRef}
               />
-              <input type="submit" hidden />
+              <input type="submit" className="absolute hidden" />
             </Form>
           </div>
         </div>
