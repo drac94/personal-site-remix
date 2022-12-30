@@ -108,7 +108,7 @@ export default function Index() {
                 <p>{prompt.command}</p>
               </div>
               {Array.isArray(prompt.output) ? (
-                <ul className="flex justify-between">
+                <ul className="grid grid-cols-4">
                   {prompt.output.map((item) => (
                     <li
                       className={item.type === "file" ? "text-blue-400" : ""}
