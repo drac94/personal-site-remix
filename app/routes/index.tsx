@@ -104,14 +104,15 @@ export default function Index() {
           {prompts.map((prompt) => (
             <div className="text-slate-200" key={prompt.command}>
               <div className="flex">
-                <Prompt path={prompt.path} />
-                <p>{prompt.command}</p>
+                <p className="break-all">
+                  <Prompt path={prompt.path} command={prompt.command} />
+                </p>
               </div>
               {Array.isArray(prompt.output) ? (
                 <ul className="grid grid-cols-4">
                   {prompt.output.map((item) => (
                     <li
-                      className={item.type === "file" ? "text-blue-400" : ""}
+                      className={item.type === "file" ? "text-teal-500" : ""}
                       key={item.name}
                     >
                       {item.name}
@@ -119,16 +120,21 @@ export default function Index() {
                   ))}
                 </ul>
               ) : (
-                <p>{prompt.output}</p>
+                <p className="break-all">{prompt.output}</p>
               )}
             </div>
           ))}
           <div className="flex">
             <Prompt path={currentPath} />
-            <Form method="post" ref={formRef} replace action="/?index">
+            <Form
+              method="post"
+              ref={formRef}
+              action="/?index"
+              className="flex-1"
+            >
               <input name="path" defaultValue={currentPath} hidden />
               <input
-                className="bg-transparent text-slate-200 outline-none"
+                className="w-full bg-transparent text-slate-200 outline-none"
                 autoFocus
                 name="command"
                 autoComplete="off"
@@ -136,7 +142,7 @@ export default function Index() {
                 autoCorrect="off"
                 ref={inputRef}
               />
-              <input type="submit" className="absolute hidden" />
+              <input type="submit" className="h-0 w-0" />
             </Form>
           </div>
         </div>

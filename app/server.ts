@@ -73,38 +73,40 @@ export const executeCommand = async ({
 }: {
   command: string;
   currentPath: string;
-  arg: string;
+  arg?: string;
 }): Promise<CommandResult> => {
-  switch (command) {
+  const normalizedCommand = command.trim().toLowerCase();
+  const normalizedArg = arg?.trim().toLowerCase();
+  switch (normalizedCommand) {
     case "":
       return { output: "", currentPath: currentPath };
     case "ls":
       return { output: getItems(currentPath), currentPath: currentPath };
     case "cd":
       // currently there is only one level down from home
-      if (!arg || arg === "~" || arg === "..") {
+      if (!arg || arg === "~" || normalizedArg === "..") {
         return { output: "", currentPath: currentPath, newPath: "home" };
       }
-      const path = `${currentPath}/${arg}`;
+      const path = `${currentPath}/${normalizedArg}`;
       const isDirectory = doesDirectoryExist(path);
       return {
         output: isDirectory
           ? ""
           : doesFileExist(path)
-          ? "cd: not a directory: " + arg
-          : "cd: no such file or directory: " + arg,
+          ? "cd: not a directory: " + normalizedArg
+          : "cd: no such file or directory: " + normalizedArg,
         currentPath,
         newPath: isDirectory ? path : currentPath,
       };
     case "cat":
-      const file = `${currentPath}/${arg}`;
+      const file = `${currentPath}/${normalizedArg}`;
       const isFile = doesFileExist(file);
       return {
         output: isFile
           ? files[file]
           : doesDirectoryExist(file)
-          ? "cat: " + arg + ": Is a directory"
-          : "cat: " + arg + ": No such file or directory",
+          ? "cat: " + normalizedArg + ": Is a directory"
+          : "cat: " + normalizedArg + ": No such file or directory",
         currentPath,
       };
     default:

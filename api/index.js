@@ -108,7 +108,7 @@ __export(root_exports, {
 var import_react2 = require("@remix-run/react");
 
 // app/tailwind.css
-var tailwind_default = "/build/_assets/tailwind-FBVV36O3.css";
+var tailwind_default = "/build/_assets/tailwind-JEZBQ2HF.css";
 
 // app/root.tsx
 var import_jsx_dev_runtime2 = require("react/jsx-dev-runtime"), links = () => [
@@ -180,24 +180,28 @@ var import_node3 = require("@remix-run/node"), import_react3 = require("@remix-r
 
 // app/components/prompt/index.tsx
 var import_jsx_dev_runtime3 = require("react/jsx-dev-runtime");
-function Prompt({ path }) {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "flex items-center text-lime-500", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("span", { children: [
+function Prompt({
+  path,
+  command
+}) {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("p", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("span", { className: "text-blue-500", children: [
       "~/luisguerrero.me/",
       path
     ] }, void 0, !0, {
       fileName: "app/components/prompt/index.tsx",
-      lineNumber: 4,
+      lineNumber: 10,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("span", { className: "mx-2 inline-block h-2 w-2 -rotate-45 border-r-2 border-b-2 border-lime-500" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("span", { className: "mx-2 inline-block h-2 w-2 -rotate-45 border-r-2 border-b-2 border-blue-500" }, void 0, !1, {
       fileName: "app/components/prompt/index.tsx",
-      lineNumber: 5,
+      lineNumber: 11,
       columnNumber: 7
-    }, this)
+    }, this),
+    command
   ] }, void 0, !0, {
     fileName: "app/components/prompt/index.tsx",
-    lineNumber: 3,
+    lineNumber: 9,
     columnNumber: 5
   }, this);
 }
@@ -248,24 +252,25 @@ This is project 2.`
   currentPath,
   arg
 }) => {
-  switch (command) {
+  let normalizedCommand = command.trim().toLowerCase(), normalizedArg = arg == null ? void 0 : arg.trim().toLowerCase();
+  switch (normalizedCommand) {
     case "":
       return { output: "", currentPath };
     case "ls":
       return { output: getItems(currentPath), currentPath };
     case "cd":
-      if (!arg || arg === "~" || arg === "..")
+      if (!arg || arg === "~" || normalizedArg === "..")
         return { output: "", currentPath, newPath: "home" };
-      let path = `${currentPath}/${arg}`, isDirectory = doesDirectoryExist(path);
+      let path = `${currentPath}/${normalizedArg}`, isDirectory = doesDirectoryExist(path);
       return {
-        output: isDirectory ? "" : doesFileExist(path) ? "cd: not a directory: " + arg : "cd: no such file or directory: " + arg,
+        output: isDirectory ? "" : doesFileExist(path) ? "cd: not a directory: " + normalizedArg : "cd: no such file or directory: " + normalizedArg,
         currentPath,
         newPath: isDirectory ? path : currentPath
       };
     case "cat":
-      let file = `${currentPath}/${arg}`;
+      let file = `${currentPath}/${normalizedArg}`;
       return {
-        output: doesFileExist(file) ? files[file] : doesDirectoryExist(file) ? "cat: " + arg + ": Is a directory" : "cat: " + arg + ": No such file or directory",
+        output: doesFileExist(file) ? files[file] : doesDirectoryExist(file) ? "cat: " + normalizedArg + ": Is a directory" : "cat: " + normalizedArg + ": No such file or directory",
         currentPath
       };
     default:
@@ -365,18 +370,15 @@ function Index() {
         },
         children: [
           prompts.map((prompt) => /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-slate-200", children: [
-            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex", children: [
-              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Prompt, { path: prompt.path }, void 0, !1, {
-                fileName: "app/routes/index.tsx",
-                lineNumber: 107,
-                columnNumber: 17
-              }, this),
-              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { children: prompt.command }, void 0, !1, {
-                fileName: "app/routes/index.tsx",
-                lineNumber: 108,
-                columnNumber: 17
-              }, this)
-            ] }, void 0, !0, {
+            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex", children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "break-all", children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Prompt, { path: prompt.path, command: prompt.command }, void 0, !1, {
+              fileName: "app/routes/index.tsx",
+              lineNumber: 108,
+              columnNumber: 19
+            }, this) }, void 0, !1, {
+              fileName: "app/routes/index.tsx",
+              lineNumber: 107,
+              columnNumber: 17
+            }, this) }, void 0, !1, {
               fileName: "app/routes/index.tsx",
               lineNumber: 106,
               columnNumber: 15
@@ -384,24 +386,24 @@ function Index() {
             Array.isArray(prompt.output) ? /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("ul", { className: "grid grid-cols-4", children: prompt.output.map((item) => /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(
               "li",
               {
-                className: item.type === "file" ? "text-blue-400" : "",
+                className: item.type === "file" ? "text-teal-500" : "",
                 children: item.name
               },
               item.name,
               !1,
               {
                 fileName: "app/routes/index.tsx",
-                lineNumber: 113,
+                lineNumber: 114,
                 columnNumber: 21
               },
               this
             )) }, void 0, !1, {
               fileName: "app/routes/index.tsx",
-              lineNumber: 111,
+              lineNumber: 112,
               columnNumber: 17
-            }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { children: prompt.output }, void 0, !1, {
+            }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "break-all", children: prompt.output }, void 0, !1, {
               fileName: "app/routes/index.tsx",
-              lineNumber: 122,
+              lineNumber: 123,
               columnNumber: 17
             }, this)
           ] }, prompt.command, !0, {
@@ -412,48 +414,61 @@ function Index() {
           /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Prompt, { path: currentPath }, void 0, !1, {
               fileName: "app/routes/index.tsx",
-              lineNumber: 127,
-              columnNumber: 13
-            }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(import_react3.Form, { method: "post", ref: formRef, replace: !0, action: "/?index", children: [
-              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("input", { name: "path", defaultValue: currentPath, hidden: !0 }, void 0, !1, {
-                fileName: "app/routes/index.tsx",
-                lineNumber: 129,
-                columnNumber: 15
-              }, this),
-              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(
-                "input",
-                {
-                  className: "bg-transparent text-slate-200 outline-none",
-                  autoFocus: !0,
-                  name: "command",
-                  autoComplete: "off",
-                  autoCapitalize: "off",
-                  autoCorrect: "off",
-                  ref: inputRef
-                },
-                void 0,
-                !1,
-                {
-                  fileName: "app/routes/index.tsx",
-                  lineNumber: 130,
-                  columnNumber: 15
-                },
-                this
-              ),
-              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("input", { type: "submit", className: "absolute hidden" }, void 0, !1, {
-                fileName: "app/routes/index.tsx",
-                lineNumber: 139,
-                columnNumber: 15
-              }, this)
-            ] }, void 0, !0, {
-              fileName: "app/routes/index.tsx",
               lineNumber: 128,
               columnNumber: 13
-            }, this)
+            }, this),
+            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(
+              import_react3.Form,
+              {
+                method: "post",
+                ref: formRef,
+                action: "/?index",
+                className: "flex-1",
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("input", { name: "path", defaultValue: currentPath, hidden: !0 }, void 0, !1, {
+                    fileName: "app/routes/index.tsx",
+                    lineNumber: 135,
+                    columnNumber: 15
+                  }, this),
+                  /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(
+                    "input",
+                    {
+                      className: "w-full bg-transparent text-slate-200 outline-none",
+                      autoFocus: !0,
+                      name: "command",
+                      autoComplete: "off",
+                      autoCapitalize: "off",
+                      autoCorrect: "off",
+                      ref: inputRef
+                    },
+                    void 0,
+                    !1,
+                    {
+                      fileName: "app/routes/index.tsx",
+                      lineNumber: 136,
+                      columnNumber: 15
+                    },
+                    this
+                  ),
+                  /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("input", { type: "submit", className: "h-0 w-0" }, void 0, !1, {
+                    fileName: "app/routes/index.tsx",
+                    lineNumber: 145,
+                    columnNumber: 15
+                  }, this)
+                ]
+              },
+              void 0,
+              !0,
+              {
+                fileName: "app/routes/index.tsx",
+                lineNumber: 129,
+                columnNumber: 13
+              },
+              this
+            )
           ] }, void 0, !0, {
             fileName: "app/routes/index.tsx",
-            lineNumber: 126,
+            lineNumber: 127,
             columnNumber: 11
           }, this)
         ]
@@ -479,7 +494,7 @@ function Index() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { version: "3fc71477", entry: { module: "/build/entry.client-V7NR2TP6.js", imports: ["/build/_shared/chunk-LARA5CK4.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-VBBZUTG4.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-YHXO2WHA.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-3FC71477.js" };
+var assets_manifest_default = { version: "8cfaee1c", entry: { module: "/build/entry.client-V7NR2TP6.js", imports: ["/build/_shared/chunk-LARA5CK4.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-T457BOAP.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-IAFOMUGP.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-8CFAEE1C.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", future = { v2_meta: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
