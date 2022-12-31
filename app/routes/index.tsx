@@ -8,7 +8,7 @@ import { Form } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import { typedjson, useTypedLoaderData } from "remix-typedjson";
 import Prompt from "~/components/prompt";
-import { executeCommand, type Item } from "~/server";
+import { executeCommand, type Item } from "~/services/commands";
 import { commitSession, destroySession, getSession } from "~/sessions";
 
 type PromptType = {
@@ -101,26 +101,27 @@ export default function Index() {
           ref={containerRef}
           onClick={() => inputRef.current?.focus()}
         >
-          {prompts.map((prompt) => (
-            <div className="text-slate-200" key={prompt.command}>
+          {prompts.map((prompt, index) => (
+            <div className="text-slate-200" key={prompt.command + index}>
               <div className="flex">
-                <p className="break-all">
-                  <Prompt path={prompt.path} command={prompt.command} />
-                </p>
+                <Prompt path={prompt.path} command={prompt.command} />
               </div>
               {Array.isArray(prompt.output) ? (
                 <ul className="grid grid-cols-4">
-                  {prompt.output.map((item) => (
+                  {prompt.output.map((item, index) => (
                     <li
                       className={item.type === "file" ? "text-teal-500" : ""}
-                      key={item.name}
+                      key={item.name + index}
                     >
                       {item.name}
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="break-all">{prompt.output}</p>
+                <div
+                  className="break-all"
+                  dangerouslySetInnerHTML={{ __html: prompt.output }}
+                />
               )}
             </div>
           ))}

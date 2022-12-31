@@ -108,7 +108,7 @@ __export(root_exports, {
 var import_react2 = require("@remix-run/react");
 
 // app/tailwind.css
-var tailwind_default = "/build/_assets/tailwind-JEZBQ2HF.css";
+var tailwind_default = "/build/_assets/tailwind-HZGJ7OYD.css";
 
 // app/root.tsx
 var import_jsx_dev_runtime2 = require("react/jsx-dev-runtime"), links = () => [
@@ -169,6 +169,23 @@ function App() {
   }, this);
 }
 
+// mdx:routes/about.mdx
+var about_exports = {};
+__export(about_exports, {
+  default: () => about_default,
+  filename: () => filename,
+  headers: () => headers,
+  meta: () => meta2
+});
+var import_react3 = __toESM(require("react"));
+function MDXContent(props = {}) {
+  let _components = Object.assign({
+    h1: "h1"
+  }, props.components), { wrapper: MDXLayout } = _components, _content = /* @__PURE__ */ import_react3.default.createElement(import_react3.default.Fragment, null, /* @__PURE__ */ import_react3.default.createElement(_components.h1, null, "About"));
+  return MDXLayout ? /* @__PURE__ */ import_react3.default.createElement(MDXLayout, { ...props }, _content) : _content;
+}
+var about_default = MDXContent, filename = "about.mdx", headers = typeof attributes < "u" && attributes.headers, meta2 = typeof attributes < "u" && attributes.meta;
+
 // app/routes/index.tsx
 var routes_exports = {};
 __export(routes_exports, {
@@ -176,7 +193,7 @@ __export(routes_exports, {
   default: () => Index,
   loader: () => loader
 });
-var import_node3 = require("@remix-run/node"), import_react3 = require("@remix-run/react"), import_react4 = require("react"), import_remix_typedjson = require("remix-typedjson");
+var import_node3 = require("@remix-run/node"), import_react4 = require("@remix-run/react"), import_react5 = require("react"), import_remix_typedjson = require("remix-typedjson");
 
 // app/components/prompt/index.tsx
 var import_jsx_dev_runtime3 = require("react/jsx-dev-runtime");
@@ -184,8 +201,8 @@ function Prompt({
   path,
   command
 }) {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("p", { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("span", { className: "text-blue-500", children: [
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("p", { className: "break-all", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("span", { className: " text-sky-500", children: [
       "~/luisguerrero.me/",
       path
     ] }, void 0, !0, {
@@ -193,7 +210,7 @@ function Prompt({
       lineNumber: 10,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("span", { className: "mx-2 inline-block h-2 w-2 -rotate-45 border-r-2 border-b-2 border-blue-500" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("span", { className: "mx-2 inline-block h-2 w-2 -rotate-45 border-r-2 border-b-2 border-sky-500" }, void 0, !1, {
       fileName: "app/components/prompt/index.tsx",
       lineNumber: 11,
       columnNumber: 7
@@ -206,7 +223,7 @@ function Prompt({
   }, this);
 }
 
-// app/server.ts
+// app/services/commands.ts
 var directories = {
   home: {
     directories: ["articles", "projects"],
@@ -219,9 +236,7 @@ var directories = {
     files: ["project1.md", "project2.md"]
   }
 }, files = {
-  "home/about.md": `# About Me 
-
-I am a software engineer.`,
+  "home/about.md": '<p>Product-focused Software Engineer with more than 13 years of experience delivering top-quality software for world-class companies. Currently Javascript (typescript) advocate. <a class="text-blue-400" href="/about" >Read more...</a></p>',
   "home/resume.md": `# Resume 
 
 I am a software engineer.`,
@@ -322,8 +337,8 @@ var import_jsx_dev_runtime4 = require("react/jsx-dev-runtime"), action = async (
   });
 };
 function Index() {
-  let { prompts, currentPath } = (0, import_remix_typedjson.useTypedLoaderData)(), containerRef = (0, import_react4.useRef)(null), formRef = (0, import_react4.useRef)(null), inputRef = (0, import_react4.useRef)(null);
-  return (0, import_react4.useEffect)(() => {
+  let { prompts, currentPath } = (0, import_remix_typedjson.useTypedLoaderData)(), containerRef = (0, import_react5.useRef)(null), formRef = (0, import_react5.useRef)(null), inputRef = (0, import_react5.useRef)(null);
+  return (0, import_react5.useEffect)(() => {
     var _a, _b, _c;
     (_a = formRef.current) == null || _a.reset(), (_b = inputRef.current) == null || _b.focus(), (_c = containerRef.current) == null || _c.scrollTo(0, containerRef.current.scrollHeight);
   }, [prompts]), /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex h-screen items-center justify-center bg-slate-500", children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex h-screen w-screen flex-col sm:h-[600px] sm:w-[800px]", children: [
@@ -369,12 +384,8 @@ function Index() {
           return (_a = inputRef.current) == null ? void 0 : _a.focus();
         },
         children: [
-          prompts.map((prompt) => /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-slate-200", children: [
-            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex", children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "break-all", children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Prompt, { path: prompt.path, command: prompt.command }, void 0, !1, {
-              fileName: "app/routes/index.tsx",
-              lineNumber: 108,
-              columnNumber: 19
-            }, this) }, void 0, !1, {
+          prompts.map((prompt, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-slate-200", children: [
+            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex", children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Prompt, { path: prompt.path, command: prompt.command }, void 0, !1, {
               fileName: "app/routes/index.tsx",
               lineNumber: 107,
               columnNumber: 17
@@ -383,30 +394,40 @@ function Index() {
               lineNumber: 106,
               columnNumber: 15
             }, this),
-            Array.isArray(prompt.output) ? /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("ul", { className: "grid grid-cols-4", children: prompt.output.map((item) => /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(
+            Array.isArray(prompt.output) ? /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("ul", { className: "grid grid-cols-4", children: prompt.output.map((item, index2) => /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(
               "li",
               {
                 className: item.type === "file" ? "text-teal-500" : "",
                 children: item.name
               },
-              item.name,
+              item.name + index2,
               !1,
               {
                 fileName: "app/routes/index.tsx",
-                lineNumber: 114,
+                lineNumber: 112,
                 columnNumber: 21
               },
               this
             )) }, void 0, !1, {
               fileName: "app/routes/index.tsx",
-              lineNumber: 112,
+              lineNumber: 110,
               columnNumber: 17
-            }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "break-all", children: prompt.output }, void 0, !1, {
-              fileName: "app/routes/index.tsx",
-              lineNumber: 123,
-              columnNumber: 17
-            }, this)
-          ] }, prompt.command, !0, {
+            }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(
+              "div",
+              {
+                className: "break-all",
+                dangerouslySetInnerHTML: { __html: prompt.output }
+              },
+              void 0,
+              !1,
+              {
+                fileName: "app/routes/index.tsx",
+                lineNumber: 121,
+                columnNumber: 17
+              },
+              this
+            )
+          ] }, prompt.command + index, !0, {
             fileName: "app/routes/index.tsx",
             lineNumber: 105,
             columnNumber: 13
@@ -414,11 +435,11 @@ function Index() {
           /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Prompt, { path: currentPath }, void 0, !1, {
               fileName: "app/routes/index.tsx",
-              lineNumber: 128,
+              lineNumber: 129,
               columnNumber: 13
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(
-              import_react3.Form,
+              import_react4.Form,
               {
                 method: "post",
                 ref: formRef,
@@ -427,7 +448,7 @@ function Index() {
                 children: [
                   /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("input", { name: "path", defaultValue: currentPath, hidden: !0 }, void 0, !1, {
                     fileName: "app/routes/index.tsx",
-                    lineNumber: 135,
+                    lineNumber: 136,
                     columnNumber: 15
                   }, this),
                   /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(
@@ -445,14 +466,14 @@ function Index() {
                     !1,
                     {
                       fileName: "app/routes/index.tsx",
-                      lineNumber: 136,
+                      lineNumber: 137,
                       columnNumber: 15
                     },
                     this
                   ),
                   /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("input", { type: "submit", className: "h-0 w-0" }, void 0, !1, {
                     fileName: "app/routes/index.tsx",
-                    lineNumber: 145,
+                    lineNumber: 146,
                     columnNumber: 15
                   }, this)
                 ]
@@ -461,14 +482,14 @@ function Index() {
               !0,
               {
                 fileName: "app/routes/index.tsx",
-                lineNumber: 129,
+                lineNumber: 130,
                 columnNumber: 13
               },
               this
             )
           ] }, void 0, !0, {
             fileName: "app/routes/index.tsx",
-            lineNumber: 127,
+            lineNumber: 128,
             columnNumber: 11
           }, this)
         ]
@@ -494,7 +515,7 @@ function Index() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { version: "8cfaee1c", entry: { module: "/build/entry.client-V7NR2TP6.js", imports: ["/build/_shared/chunk-LARA5CK4.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-T457BOAP.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-IAFOMUGP.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-8CFAEE1C.js" };
+var assets_manifest_default = { version: "a7bc1c40", entry: { module: "/build/entry.client-QS73N6PO.js", imports: ["/build/_shared/chunk-AR76T3D7.js", "/build/_shared/chunk-KCDW4FMX.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-V25HO6PW.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/about": { id: "routes/about", parentId: "root", path: "about", index: void 0, caseSensitive: void 0, module: "/build/routes/about-PYBAT6UE.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-WO7Y3EAQ.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-A7BC1C40.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", future = { v2_meta: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
@@ -505,6 +526,14 @@ var assetsBuildDirectory = "public/build", future = { v2_meta: !1 }, publicPath 
     index: void 0,
     caseSensitive: void 0,
     module: root_exports
+  },
+  "routes/about": {
+    id: "routes/about",
+    parentId: "root",
+    path: "about",
+    index: void 0,
+    caseSensitive: void 0,
+    module: about_exports
   },
   "routes/index": {
     id: "routes/index",

@@ -36,7 +36,7 @@ const directories: Directory = {
 };
 
 const files: File = {
-  "home/about.md": `# About Me \n\nI am a software engineer.`,
+  "home/about.md": `<p>Product-focused Software Engineer with more than 13 years of experience delivering top-quality software for world-class companies. Currently Javascript (typescript) advocate. <a class="text-blue-400" href="/about" >Read more...</a></p>`,
   "home/resume.md": `# Resume \n\nI am a software engineer.`,
   "home/articles/article1.md": `# Article 1 \n\nThis is article 1.`,
   "home/articles/article2.md": `# Article 2 \n\nThis is article 2.`,
