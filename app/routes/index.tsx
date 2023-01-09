@@ -142,6 +142,7 @@ export default function Index() {
                 autoCapitalize="off"
                 autoCorrect="off"
                 ref={inputRef}
+                aria-labelledby="command"
               />
               <input type="submit" className="h-0 w-0" />
             </Form>

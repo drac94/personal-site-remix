@@ -18,6 +18,7 @@ export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Luis Guerrero personal website",
   viewport: "width=device-width,initial-scale=1",
+  description: "Luis Guerrero personal website",
 });
 
 export default function App() {
