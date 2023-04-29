@@ -6425,10 +6425,10 @@ remark-rehype@^9.0.0:
     mdast-util-to-hast "^11.0.0"
     unified "^10.0.0"
 
-remix-typedjson@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/remix-typedjson/-/remix-typedjson-0.1.6.tgz#ff8c83538cc51f9b4686fac3be2b93087449d2ad"
-  integrity sha512-3weYEM1drz7la8orRQPJS0iwIj6Zzk4Fimr9cm7srTQow2TArtxTmeZIHicEYrq0EAcBOhXAyxCaik7zmoavXQ==
+remix-typedjson@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/remix-typedjson/-/remix-typedjson-0.1.7.tgz#215afa7da56effe86630b24ced79ff8ff1694ff1"
+  integrity sha512-h7WoKbKBGsVdZZp3s79U5SDrMvQ3We7BjGaSIPxchnJOTS3GUDat0kBoy/gh9TVKRf5KYCee+K1UlFAYQmLQsA==
 
 repeat-element@^1.1.2:
   version "1.1.4"
